@@ -327,8 +327,10 @@ app.get('/boarddelete/:writer', logincheck2 ,function(req,res){
 //-------------------------------------------------게시판 수정
 app.get('/boardmodify/:writer',function(req, res){
   var [writer,title] = req.params.writer.split(',')
+  req.session.utitle = title
+
   if(writer === req.session.uid){
-    connection.query('select * from user.board where userid=?',[req.session.uid],function(err,rows){
+    connection.query('select * from user.board where userid=? AND title=?',[req.session.uid, title],function(err,rows){
       console.log(req.session.uid);
     if (err){throw err}
       res.render("notice_view_modify.ejs",{'data':rows[0]},function(err3,html){
@@ -344,14 +346,14 @@ app.get('/boardmodify/:writer',function(req, res){
   }
 })
 
-app.post('/boardmodify/:writer',function(req,res){
+app.post('/boardmodify',function(req,res){
 
   const body = req.body;
   const title = body.title;
   const content = body.contents;
-
-  connection.query('UPDATE user.board SET title=?,content=? WHERE userid =?' ,[
-    title, content, req.session.uid],function(err,result,fields){
+  connection.query('set sql_safe_updates=0;',function(err,rows){
+  connection.query('UPDATE user.board SET title=?,content=? WHERE userid =? AND title=?' ,[
+    title, content, req.session.uid, req.session.utitle],function(err,result,fields){
      if(err){
        console.log(err)
      }else{
@@ -360,4 +362,5 @@ app.post('/boardmodify/:writer',function(req,res){
      }
     }
    );
+  })
 })
