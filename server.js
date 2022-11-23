@@ -115,7 +115,7 @@ app.post('/regist',(req,res)=>{
           connection.query('insert into user.user_tb(userid, name, phone, password, email) values(?,?,?,?,?)',[
               id, name, phone, pw, email]
               );
-          res.redirect('/newpage');
+              res.send("<script>alert('회원가입하셨습니다. 다시 로그인하세요');location.href='/';</script>");
       }else{
           console.log('회원가입 실패');
           res.redirect('/login');
@@ -292,7 +292,7 @@ app.get('/loginnoticeview/:i',function(req,res){
       })
       })
 })
-//-------------------------------------------
+//------------------------------------------- 게시판 생성
 app.get('/boardcreate',function(req,res){
   res.render('boardcreate.ejs')
 });
@@ -311,7 +311,7 @@ app.post('/boardcreate',logincheck2, function(req,res){
       res.redirect('/loginlistview')
   })
 })
-
+//-------------------------------------------------------게시판 삭제
 app.get('/boarddelete/:writer', logincheck2 ,function(req,res){
   var [writer,title] = req.params.writer.split(',')
   if(writer === req.session.uid){
@@ -323,4 +323,41 @@ app.get('/boarddelete/:writer', logincheck2 ,function(req,res){
   else{
       res.send("<script>alert('작성자가 일치하지 않습니다.');location.href='/loginlistview';</script>");
   }
+})
+//-------------------------------------------------게시판 수정
+app.get('/boardmodify/:writer',function(req, res){
+  var [writer,title] = req.params.writer.split(',')
+  if(writer === req.session.uid){
+    connection.query('select * from user.board where userid=?',[req.session.uid],function(err,rows){
+      console.log(req.session.uid);
+    if (err){throw err}
+      res.render("notice_view_modify.ejs",{'data':rows[0]},function(err3,html){
+        if(err3){
+            throw err3;
+            }
+            res.end(html)
+        })
+  })
+  } 
+  else{
+    res.send("<script>alert('작성자가 일치하지 않습니다.');location.href='/loginlistview';</script>");
+  }
+})
+
+app.post('/boardmodify/:writer',function(req,res){
+
+  const body = req.body;
+  const title = body.title;
+  const content = body.contents;
+
+  connection.query('UPDATE user.board SET title=?,content=? WHERE userid =?' ,[
+    title, content, req.session.uid],function(err,result,fields){
+     if(err){
+       console.log(err)
+     }else{
+       console.log("수정 완료")
+       res.redirect('/loginlistview');
+     }
+    }
+   );
 })
