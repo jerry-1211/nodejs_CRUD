@@ -10,8 +10,8 @@ Tourlist in tour 프론트엔드로 구성
 BACK-end
 
 --구현 기능--
-회원가입 :regist.ejs와 연결되어 regist.ejs페이지에 입력된 정보들을 post로 받아와 데이터베이스에 삽입
-로그인 :login.ejs에입력된 ID와 password를 post로 받아와 데이터베이스에 검색하여 일치하는 정보가 있을 경우 로그인하며 ID와 password를 세션에 저장
+회원가입 :regist.ejs와 연결되어 regist.ejs페이지에 입력된 정보들을 post로 받아와 데이터베이스에 삽입\n
+로그인 :login.ejs에입력된 ID와 password를 post로 받아와 데이터베이스에 검색하여 일치하는 정보가 있을 경우 로그인하며 ID와 password를 세션에 저장\n
 마이페이지 :세션에 저장된 ID를 조건으로 데이터베이스에서 해당ID의 정보를 가져와 mypage.ejs에 표현.
 내정보수정 :회원가입과 유사한 방식으로 변경할 정보를 mypage_modify.ejs에서 입력받아세션에 저장된 ID의 정보를 갱신
 로그아웃 :현재 세션에 저장된 내용을 destroy하며 비로그인 시의 mainpage.ejs로 이동
