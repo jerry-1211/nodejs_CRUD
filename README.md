@@ -20,4 +20,4 @@ BACK-end<br/>
 공지사항 : board테이블에 있는 모든 정보들을 받아와 인덱스 순으로 notice_list.ejs, login-notice_list.ejs에 나타냄.<br/>
 공지사항 글 확인 :notice_list.ejs, login-notice_list.ejs의 게시글 인덱스를 받아와 인덱스를 기준으로 board테이블의 정보를 list_view.ejs와 login-list_view.ejs로 가져옴.<br/>
 글 수정 : login-list_view.ejs의 작성자의 ID와 제목을 req.params로 받아 작성자ID가 세션에 저장되어있는ID와 같을 경우 제목을 기준으로 내용을 수정하여 데이터베이스에 갱신<br/>
-글 삭제 : login-list_view.ejs의 작성자의 ID와 제목을 req.params로 받아 작성자ID가 세션에 저장되어있는ID와 같을 경우 제목을 기준으로 글 삭제<br/>
+글 삭제 : login-list_view.ejs의 작성자의 ID와 제목을 req.params로 받아 작성자ID가 세션에 저장되어있는ID와 같을 경우 제목을 기준으로 글 삭제
